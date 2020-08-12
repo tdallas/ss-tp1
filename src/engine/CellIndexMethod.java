@@ -14,6 +14,8 @@ public class CellIndexMethod {
     private final double length;
     private final int size;
     private final double cellLength;
+    private final long startTime;
+    private final long endTime;
 
     public CellIndexMethod(List<Particle> particles, boolean periodicBoundary, double interactionRadius, double length, int size) {
         this.matrix = new Matrix(length, size);
@@ -27,11 +29,29 @@ public class CellIndexMethod {
             neighbours.put(p, new HashSet<>());
         }
         fillMatrix(particles);
+        startTime = System.currentTimeMillis();
         fillNeighbours();
+        endTime = System.currentTimeMillis();
     }
 
     public Map<Particle, Set<Particle>> getNeighbours() {
         return neighbours;
+    }
+
+    public long getTotalTime(){
+        return endTime - startTime;
+    }
+
+    public double getLength() {
+        return length;
+    }
+
+    public double getInteractionRadius() {
+        return interactionRadius;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     private void fillMatrix(List<Particle> particles) {
@@ -100,7 +120,7 @@ public class CellIndexMethod {
 
         double distance = Math.hypot(pX - qX, pY - qY) - p.getRadius() - q.getRadius();
 
-        if (distance < 2 * interactionRadius) {
+        if (distance < interactionRadius) {
             neighbours.get(p).add(q);
             neighbours.get(q).add(p);
         }

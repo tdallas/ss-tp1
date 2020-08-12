@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Random;
 
 public class ParticlesGenerator {
-    private Random rand;
-    private List<Particle> particles;
-    private double length;
+    private final Random rand;
+    private final List<Particle> particles;
+    private final double length;
     private double quantity;
-    private double minRadius;
+    private final double minRadius;
     private double maxRadius;
-    private boolean fixedRadius;
+    private final boolean fixedRadius;
+    private int idCounter;
 
     private static final int ALLOWED_ATTEMPTS = 30;
 
@@ -21,6 +22,7 @@ public class ParticlesGenerator {
         this.fixedRadius = true;
         this.length = length;
         this.quantity = quantity;
+        this.idCounter = 1;
         this.particles = new ArrayList<>();
         generateRandomParticles();
     }
@@ -70,12 +72,12 @@ public class ParticlesGenerator {
             throw new IllegalArgumentException("Could not generate particle in less attempts than allowed.");
         }
 
-        return new Particle(randomX, randomY, randomRadius);
+        return new Particle(idCounter++, randomX, randomY, randomRadius);
     }
 
     private double generateRandomDouble(final double min, final double max) {
         double r = rand.nextDouble();
-        return min + (max - min + 1) * r;
+        return min + (max - min) * r;
     }
 
     private double circlesDistance(final double x1, final double y1, final double r1, final double x2, final double y2, final double r2) {

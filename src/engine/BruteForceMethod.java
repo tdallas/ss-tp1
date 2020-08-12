@@ -10,6 +10,8 @@ public class BruteForceMethod {
     private final double length;
     private final double interactionRadius;
     private double maxRadius;
+    private final long startTime;
+    private final long endTime;
 
     public BruteForceMethod(List<Particle> particles, final double length, final double interactionRadius, final boolean periodicBoundary) {
         this.length = length;
@@ -23,11 +25,21 @@ public class BruteForceMethod {
             }
             neighbours.put(p, new HashSet<>());
         }
+        startTime = System.currentTimeMillis();
         fillNeighbours(particles);
+        endTime = System.currentTimeMillis();
     }
 
     public Map<Particle, Set<Particle>> getNeighbours() {
         return neighbours;
+    }
+
+    public double getInteractionRadius() {
+        return interactionRadius;
+    }
+
+    public long getTotalTime(){
+        return endTime - startTime;
     }
 
     private void fillNeighbours(List<Particle> particles) {
@@ -65,7 +77,7 @@ public class BruteForceMethod {
 
         double distance = Math.hypot(pX - qX, pY - qY) - p.getRadius() - q.getRadius();
 
-        if (distance < 2 * interactionRadius) {
+        if (distance < interactionRadius) {
             neighbours.get(p).add(q);
             neighbours.get(q).add(p);
         }

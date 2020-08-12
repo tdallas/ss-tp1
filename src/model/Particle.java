@@ -3,14 +3,20 @@ package model;
 import java.util.Objects;
 
 public class Particle {
+    private final int id;
     private final double x;
     private final double y;
     private final double radius;
 
-    public Particle(double x, double y, double radius) {
+    public Particle(int id, double x, double y, double radius) {
+        this.id = id;
         this.x = x;
         this.y = y;
         this.radius = radius;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public double getX() {

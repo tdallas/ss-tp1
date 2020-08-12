@@ -14,7 +14,7 @@ public class Cell {
         return particles;
     }
 
-    public boolean addParticle(Particle newParticle){
-        return particles.add(newParticle);
+    public void addParticle(Particle newParticle){
+        particles.add(newParticle);
     }
 }
