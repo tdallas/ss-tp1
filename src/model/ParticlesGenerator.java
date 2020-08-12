@@ -1,0 +1,105 @@
+package model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class ParticlesGenerator {
+    private Random rand;
+    private List<Particle> particles;
+    private double length;
+    private double quantity;
+    private double minRadius;
+    private double maxRadius;
+    private boolean fixedRadius;
+
+    private static final int ALLOWED_ATTEMPTS = 30;
+
+    public ParticlesGenerator(double fixedRadius, double length, int quantity) {
+        this.rand = new Random();
+        this.minRadius = fixedRadius;
+        this.fixedRadius = true;
+        this.length = length;
+        this.quantity = quantity;
+        this.particles = new ArrayList<>();
+        generateRandomParticles();
+    }
+
+    public ParticlesGenerator(double minRadius, double maxRadius, double length, int quantity) {
+        this.rand = new Random();
+        this.minRadius = minRadius;
+        this.maxRadius = maxRadius;
+        this.fixedRadius = false;
+        this.length = length;
+        this.quantity = quantity;
+        this.particles = new ArrayList<>();
+        generateRandomParticles();
+    }
+
+    public void generateRandomParticles() {
+        while (quantity > 0) {
+            particles.add(createParticle());
+            quantity--;
+        }
+    }
+
+    public Particle createParticle() {
+        double randomX = 0, randomY = 0, randomRadius = 0;
+        int checkedParticles = 0;
+        int attempts = 0;
+        boolean particleOverlaps = true;
+
+        while (particleOverlaps && attempts < ALLOWED_ATTEMPTS) {
+            randomX = generateRandomDouble(0, length);
+            randomY = generateRandomDouble(0, length);
+            if(fixedRadius){
+                randomRadius = minRadius;
+            }
+            else{
+                randomRadius = generateRandomDouble(minRadius, maxRadius);
+            }
+            checkedParticles = checkCorrectParticleDistribution(randomX, randomY, randomRadius);
+            if (checkedParticles == particles.size()) {
+                particleOverlaps = false;
+            }
+
+            attempts++;
+        }
+
+        if(particleOverlaps && attempts < ALLOWED_ATTEMPTS){
+            throw new IllegalArgumentException("Could not generate particle in less attempts than allowed.");
+        }
+
+        return new Particle(randomX, randomY, randomRadius);
+    }
+
+    private double generateRandomDouble(final double min, final double max) {
+        double r = rand.nextDouble();
+        return min + (max - min + 1) * r;
+    }
+
+    private double circlesDistance(final double x1, final double y1, final double r1, final double x2, final double y2, final double r2) {
+        return Math.hypot(x1 - x2, y1 - y2) - r1 - r2;
+    }
+
+    private int checkCorrectParticleDistribution(final double x, final double y, final double radius) {
+        Particle curr;
+        int checkedParticles = 0;
+
+        while (checkedParticles < particles.size()) {
+            curr = particles.get(checkedParticles);
+
+            if (circlesDistance(curr.getX(), curr.getY(), curr.getRadius(), x, y, radius) < 0) {
+                break;
+            }
+
+            checkedParticles++;
+        }
+
+        return checkedParticles;
+    }
+
+    public List<Particle> getParticles() {
+        return particles;
+    }
+}

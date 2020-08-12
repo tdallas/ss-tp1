@@ -3,14 +3,14 @@ package model;
 public class Matrix {
     private final Cell[][] matrix;
     private final double cellLength;
-    private final double l;
-    private final int m;
+    private final double length;
+    private final int size;
 
-    public Matrix(double l, int m) {
-        this.matrix = new Cell[m][m];
-        this.l = l;
-        this.m = m;
-        this.cellLength = l / m;
+    public Matrix(double length, int size) {
+        this.matrix = new Cell[size][size];
+        this.length = length;
+        this.size = size;
+        this.cellLength = length / size;
     }
 
     public Cell[][] getMatrix() {
@@ -21,11 +21,11 @@ public class Matrix {
         return cellLength;
     }
 
-    public double getL() {
-        return l;
+    public double getLength() {
+        return length;
     }
 
-    public int getM() {
-        return m;
+    public int getSize() {
+        return size;
     }
 }

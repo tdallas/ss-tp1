@@ -25,18 +25,6 @@ public class Particle {
         return radius;
     }
 
-    public double distanceTo(final Particle particle){
-        return Math.hypot(x - particle.x, y - particle.y) - radius - particle.radius;
-    }
-
-    public boolean interactsWith(final Particle particle, final double rc){
-        double distance = distanceTo(particle);
-        if (distance < 0){
-            return true;
-        }
-        return distance < rc;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
