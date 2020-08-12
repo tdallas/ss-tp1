@@ -24,6 +24,7 @@ public class Main {
 
         BruteForceMethod bfm = new BruteForceMethod(particles, 5, 0.5, true);
         CellIndexMethod cim = new CellIndexMethod(particles, true, 1, 20, 19);
+        FileWriter.writeInput(particles, "test", 20.0, 500);
         FileWriter.writeOutput(particles, cim.getNeighbours(), "test_bfm", bfm.getTotalTime(), bfm.getInteractionRadius());
         FileWriter.writeOutput(particles, cim.getNeighbours(), "test_cim", cim.getTotalTime(), cim.getInteractionRadius());
     }
