@@ -16,8 +16,9 @@ public class CellIndexMethod {
     private final double cellLength;
     private final long startTime;
     private final long endTime;
+    private double maxRadius;
 
-    public CellIndexMethod(List<Particle> particles, boolean periodicBoundary, double interactionRadius, double length, int size) {
+    public CellIndexMethod(List<Particle> particles, boolean periodicBoundary, double interactionRadius, double length, int size) throws IllegalArgumentException{
         this.matrix = new Matrix(length, size);
         this.periodicBoundary = periodicBoundary;
         this.interactionRadius = interactionRadius;
@@ -25,8 +26,16 @@ public class CellIndexMethod {
         this.size = size;
         this.cellLength = length / size;
         this.neighbours = new HashMap<>();
+        this.maxRadius = 0;
         for (Particle p : particles) {
+            if(p.getRadius() > maxRadius){
+                maxRadius = p.getRadius();
+            }
             neighbours.put(p, new HashSet<>());
+        }
+        //Check argument l/m > rmax + rc
+        if((length / size) < (maxRadius + interactionRadius)){
+            throw new IllegalArgumentException("Incorrect arguments for Cell Index Method.");
         }
         fillMatrix(particles);
         startTime = System.nanoTime();

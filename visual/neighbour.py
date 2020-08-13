@@ -1,29 +1,28 @@
 #!/usr/bin/python
 
-import numpy as np
+import getopt
 import matplotlib.pyplot as plt
-import matplotlib.collections
+import sys
 
-import sys, getopt, re
 
 def main(argv):
     inputfile = ''
     outputfile = ''
     try:
-        opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
+        opts, args = getopt.getopt(argv, "hi:o:", ["ifile=", "ofile="])
     except getopt.GetoptError:
-        print ('neighbour.py -i <inputfile> -o <outputfile>')
+        print('neighbour.py -i <inputfile> -o <outputfile>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print ('neighbour.py -i <inputfile> -o <outputfile>')
+            print('neighbour.py -i <inputfile> -o <outputfile>')
             sys.exit()
         elif opt in ("-i", "--ifile"):
             inputfile = arg
         elif opt in ("-o", "--ofile"):
             outputfile = arg
-    print ('Input file is "{}"'.format(inputfile))
-    print ('Output file is "{}"'.format(outputfile))
+    print('Input file is "{}"'.format(inputfile))
+    print('Output file is "{}"'.format(outputfile))
 
     particleIds = []
     particleRadius = []
@@ -103,7 +102,7 @@ def main(argv):
         colours = ['black'] * quantity
 
         colours[val - 1] = 'r'
-        for n in neighbours[val -1]:
+        for n in neighbours[val - 1]:
             colours[n - 1] = 'g'
 
         lim = 0, length
@@ -116,23 +115,32 @@ def main(argv):
             draw_circle = plt.Circle((particleXCoords[i], particleYCoords[i]), particleRadius[i], color=colours[i])
             ax.add_artist(draw_circle)
             i += 1
-        draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val -1]), interactionRadius + particleRadius[val - 1],fill=False)
+        draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val - 1]),
+                                 interactionRadius + particleRadius[val - 1], fill=False)
         ax.add_artist(draw_circle)
-        draw_circle = plt.Circle((particleXCoords[val - 1] - length, particleYCoords[val -1] - length), interactionRadius + particleRadius[val - 1],fill=False)
+        draw_circle = plt.Circle((particleXCoords[val - 1] - length, particleYCoords[val - 1] - length),
+                                 interactionRadius + particleRadius[val - 1], fill=False)
         ax.add_artist(draw_circle)
-        draw_circle = plt.Circle((particleXCoords[val - 1] + length, particleYCoords[val -1] + length), interactionRadius + particleRadius[val - 1],fill=False)
+        draw_circle = plt.Circle((particleXCoords[val - 1] + length, particleYCoords[val - 1] + length),
+                                 interactionRadius + particleRadius[val - 1], fill=False)
         ax.add_artist(draw_circle)
-        draw_circle = plt.Circle((particleXCoords[val - 1] + length, particleYCoords[val -1] - length), interactionRadius + particleRadius[val - 1],fill=False)
+        draw_circle = plt.Circle((particleXCoords[val - 1] + length, particleYCoords[val - 1] - length),
+                                 interactionRadius + particleRadius[val - 1], fill=False)
         ax.add_artist(draw_circle)
-        draw_circle = plt.Circle((particleXCoords[val - 1] - length, particleYCoords[val -1] + length), interactionRadius + particleRadius[val - 1],fill=False)
+        draw_circle = plt.Circle((particleXCoords[val - 1] - length, particleYCoords[val - 1] + length),
+                                 interactionRadius + particleRadius[val - 1], fill=False)
         ax.add_artist(draw_circle)
-        draw_circle = plt.Circle((particleXCoords[val - 1] + length, particleYCoords[val -1]), interactionRadius + particleRadius[val - 1],fill=False)
+        draw_circle = plt.Circle((particleXCoords[val - 1] + length, particleYCoords[val - 1]),
+                                 interactionRadius + particleRadius[val - 1], fill=False)
         ax.add_artist(draw_circle)
-        draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val -1] + length), interactionRadius + particleRadius[val - 1],fill=False)
+        draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val - 1] + length),
+                                 interactionRadius + particleRadius[val - 1], fill=False)
         ax.add_artist(draw_circle)
-        draw_circle = plt.Circle((particleXCoords[val - 1] - length, particleYCoords[val -1]), interactionRadius + particleRadius[val - 1],fill=False)
+        draw_circle = plt.Circle((particleXCoords[val - 1] - length, particleYCoords[val - 1]),
+                                 interactionRadius + particleRadius[val - 1], fill=False)
         ax.add_artist(draw_circle)
-        draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val -1] - length), interactionRadius + particleRadius[val - 1],fill=False)
+        draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val - 1] - length),
+                                 interactionRadius + particleRadius[val - 1], fill=False)
         ax.add_artist(draw_circle)
 
         # Plot's aesthetics
