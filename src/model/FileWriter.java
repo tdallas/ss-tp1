@@ -34,7 +34,7 @@ public class FileWriter {
         Path file = Paths.get("resources/output_" + filename + ".txt");
         List<String> lines = new ArrayList<>();
 
-        lines.add("Time: " + timeSpent.toString() + " ms");
+        lines.add("Time: " + timeSpent.toString() + " ns");
         lines.add("Interaction Radius: " + interactionRadius.toString());
         lines.add("Output:");
         for( Particle p: particles) {

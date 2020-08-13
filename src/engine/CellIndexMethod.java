@@ -29,9 +29,9 @@ public class CellIndexMethod {
             neighbours.put(p, new HashSet<>());
         }
         fillMatrix(particles);
-        startTime = System.currentTimeMillis();
+        startTime = System.nanoTime();
         fillNeighbours();
-        endTime = System.currentTimeMillis();
+        endTime = System.nanoTime();
     }
 
     public Map<Particle, Set<Particle>> getNeighbours() {

@@ -25,9 +25,9 @@ public class BruteForceMethod {
             }
             neighbours.put(p, new HashSet<>());
         }
-        startTime = System.currentTimeMillis();
+        startTime = System.nanoTime();
         fillNeighbours(particles);
-        endTime = System.currentTimeMillis();
+        endTime = System.nanoTime();
     }
 
     public Map<Particle, Set<Particle>> getNeighbours() {

@@ -67,7 +67,7 @@ def main(argv):
     # Strips the newline character
     for line in OutputLines:
         if count == 0:
-            str = line.strip().replace(' ms', '')
+            str = line.strip().replace(' ns', '')
             str = str.split(': ')
             time = int(str[1])
         elif count == 1:
