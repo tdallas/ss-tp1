@@ -85,6 +85,10 @@ public class ParticlesGenerator {
     }
 
     private int checkCorrectParticleDistribution(final double x, final double y, final double radius) {
+        if(x - radius < 0 || y - radius < 0 || x + radius > length || y + radius > length){
+            return 0;
+        }
+
         Particle curr;
         int checkedParticles = 0;
 

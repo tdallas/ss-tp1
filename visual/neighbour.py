@@ -2,6 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.collections
 
 import sys, getopt, re
 
@@ -24,6 +25,11 @@ def main(argv):
     print ('Input file is "{}"'.format(inputfile))
     print ('Output file is "{}"'.format(outputfile))
 
+    particleIds = []
+    particleRadius = []
+    particleXCoords = []
+    particleYCoords = []
+    neighbours = []
     time = 0
     quantity = 0
     length = 0
@@ -39,16 +45,17 @@ def main(argv):
         if count == 0:
             str = line.strip().split(': ')
             quantity = int(str[1])
-            print ("Quantity: {}".format(quantity))
         elif count == 1:
             str = line.strip().split(': ')
             length = float(str[1])
-            print ("Length: {}".format(length))
         elif count > 2:
             str = line.strip().replace(': [ ', ' ')
             str = str.replace(' ]', '')
             str = str.split(' ')
-            print ("Id: {}, Radius: {}, X: {}, Y:{}".format(str[0], str[1], str[2], str[3]))
+            particleIds.append(int(str[0]))
+            particleRadius.append(float(str[1]))
+            particleXCoords.append(float(str[2]))
+            particleYCoords.append(float(str[3]))
 
         count += 1
 
@@ -63,20 +70,61 @@ def main(argv):
             str = line.strip().replace(' ms', '')
             str = str.split(': ')
             time = int(str[1])
-            print ("Time: {} ms".format(time))
         elif count == 1:
             str = line.strip().split(': ')
             interactionRadius = float(str[1])
-            print ("Interaction Radius: {}".format(interactionRadius))
         elif count > 2:
             str = line.strip().replace(': [ ', ' ')
             str = str.replace(' ]', '')
             str = str.split(' ')
-            print ("Id: {}".format(str[0]))
-            print ('Neigbours: ')
-            print (str)
+            aux = []
+            j = 1
+            while j < len(str):
+                aux.append(int(str[j]))
+                j += 1
+            neighbours.append(aux)
 
         count += 1
+
+    # Preguntar que particula quiere graficar vecinos
+    val = input("Ingrese el id de particula: ")
+    val = int(val)
+
+    while val < 1 | val > quantity:
+        val = input("Error, no existe esa particula. ingrese de nuevo: ")
+        val = int(val)
+
+    colours = ['black'] * quantity
+
+    colours[val - 1] = 'r'
+    for n in neighbours[val -1]:
+        colours[n - 1] = 'g'
+
+    lim = 0, length
+    ## Scatter plot
+
+    fig, ax = plt.subplots()
+
+    i = 0
+    while i < quantity:
+        draw_circle = plt.Circle((particleXCoords[i], particleYCoords[i]), particleRadius[i], color=colours[i])
+        ax.add_artist(draw_circle)
+        i += 1
+    draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val -1]), interactionRadius,fill=False)
+    ax.add_artist(draw_circle)
+
+    # Plot's aesthetics
+    ax.set_aspect('equal')
+    ax.set_title('Neighbours')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_xlim(lim)
+    ax.set_ylim(lim)
+
+    # Show
+    plt.show()
+    plt.close(fig)
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
