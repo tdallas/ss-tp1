@@ -86,44 +86,50 @@ def main(argv):
 
         count += 1
 
-    # Preguntar que particula quiere graficar vecinos
-    val = input("Ingrese el id de particula: ")
-    val = int(val)
+    exit = 0
 
-    while val < 1 or val > quantity:
-        val = input("Error, no existe esa particula. ingrese de nuevo: ")
+    while exit == 0:
+        # Preguntar que particula quiere graficar vecinos
+        val = input("Ingrese el id de particula o exit para salir: ")
+        if val == 'exit':
+            exit = 1
+            break
         val = int(val)
 
-    colours = ['black'] * quantity
+        while val < 1 or val > quantity:
+            val = input("Error, no existe esa particula. ingrese de nuevo: ")
+            val = int(val)
 
-    colours[val - 1] = 'r'
-    for n in neighbours[val -1]:
-        colours[n - 1] = 'g'
+        colours = ['black'] * quantity
 
-    lim = 0, length
-    ## Scatter plot
+        colours[val - 1] = 'r'
+        for n in neighbours[val -1]:
+            colours[n - 1] = 'g'
 
-    fig, ax = plt.subplots()
+        lim = 0, length
+        ## Scatter plot
 
-    i = 0
-    while i < quantity:
-        draw_circle = plt.Circle((particleXCoords[i], particleYCoords[i]), particleRadius[i], color=colours[i])
+        fig, ax = plt.subplots()
+
+        i = 0
+        while i < quantity:
+            draw_circle = plt.Circle((particleXCoords[i], particleYCoords[i]), particleRadius[i], color=colours[i])
+            ax.add_artist(draw_circle)
+            i += 1
+        draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val -1]), interactionRadius,fill=False)
         ax.add_artist(draw_circle)
-        i += 1
-    draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val -1]), interactionRadius,fill=False)
-    ax.add_artist(draw_circle)
 
-    # Plot's aesthetics
-    ax.set_aspect('equal')
-    ax.set_title('Neighbours')
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.set_xlim(lim)
-    ax.set_ylim(lim)
+        # Plot's aesthetics
+        ax.set_aspect('equal')
+        ax.set_title('Neighbours')
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.set_xlim(lim)
+        ax.set_ylim(lim)
 
-    # Show
-    plt.show()
-    plt.close(fig)
+        # Show
+        plt.show()
+        plt.close(fig)
 
 
 if __name__ == "__main__":
