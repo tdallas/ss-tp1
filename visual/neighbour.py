@@ -90,14 +90,14 @@ def main(argv):
 
     while exit == 0:
         # Preguntar que particula quiere graficar vecinos
-        val = input("Ingrese el id de particula o exit para salir: ")
+        val = input("Enter particle id or exit: ")
         if val == 'exit':
             exit = 1
             break
         val = int(val)
 
         while val < 1 or val > quantity:
-            val = input("Error, no existe esa particula. ingrese de nuevo: ")
+            val = input("Error, that particle id does not exist. Enter again: ")
             val = int(val)
 
         colours = ['black'] * quantity
@@ -118,12 +118,28 @@ def main(argv):
             i += 1
         draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val -1]), interactionRadius + particleRadius[val - 1],fill=False)
         ax.add_artist(draw_circle)
+        draw_circle = plt.Circle((particleXCoords[val - 1] - length, particleYCoords[val -1] - length), interactionRadius + particleRadius[val - 1],fill=False)
+        ax.add_artist(draw_circle)
+        draw_circle = plt.Circle((particleXCoords[val - 1] + length, particleYCoords[val -1] + length), interactionRadius + particleRadius[val - 1],fill=False)
+        ax.add_artist(draw_circle)
+        draw_circle = plt.Circle((particleXCoords[val - 1] + length, particleYCoords[val -1] - length), interactionRadius + particleRadius[val - 1],fill=False)
+        ax.add_artist(draw_circle)
+        draw_circle = plt.Circle((particleXCoords[val - 1] - length, particleYCoords[val -1] + length), interactionRadius + particleRadius[val - 1],fill=False)
+        ax.add_artist(draw_circle)
+        draw_circle = plt.Circle((particleXCoords[val - 1] + length, particleYCoords[val -1]), interactionRadius + particleRadius[val - 1],fill=False)
+        ax.add_artist(draw_circle)
+        draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val -1] + length), interactionRadius + particleRadius[val - 1],fill=False)
+        ax.add_artist(draw_circle)
+        draw_circle = plt.Circle((particleXCoords[val - 1] - length, particleYCoords[val -1]), interactionRadius + particleRadius[val - 1],fill=False)
+        ax.add_artist(draw_circle)
+        draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val -1] - length), interactionRadius + particleRadius[val - 1],fill=False)
+        ax.add_artist(draw_circle)
 
         # Plot's aesthetics
         ax.set_aspect('equal')
-        ax.set_title('Neighbours')
-        ax.set_xlabel('x')
-        ax.set_ylabel('y')
+        ax.set_title("Neighbours of {}".format(val))
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
         ax.set_xlim(lim)
         ax.set_ylim(lim)
 
