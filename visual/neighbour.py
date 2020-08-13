@@ -90,7 +90,7 @@ def main(argv):
     val = input("Ingrese el id de particula: ")
     val = int(val)
 
-    while val < 1 | val > quantity:
+    while val < 1 or val > quantity:
         val = input("Error, no existe esa particula. ingrese de nuevo: ")
         val = int(val)
 
