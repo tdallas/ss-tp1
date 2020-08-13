@@ -116,7 +116,7 @@ def main(argv):
             draw_circle = plt.Circle((particleXCoords[i], particleYCoords[i]), particleRadius[i], color=colours[i])
             ax.add_artist(draw_circle)
             i += 1
-        draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val -1]), interactionRadius,fill=False)
+        draw_circle = plt.Circle((particleXCoords[val - 1], particleYCoords[val -1]), interactionRadius + particleRadius[val - 1],fill=False)
         ax.add_artist(draw_circle)
 
         # Plot's aesthetics
