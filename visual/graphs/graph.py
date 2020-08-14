@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from statistics import mean
 
 # Read input file
-file = open("visual/graphs/n_variation_15.txt", 'r')
+file = open("visual/graphs/m_variable_5000.txt", 'r')
 InputLines = file.readlines()
 
 times = []
@@ -18,8 +18,8 @@ for line in InputLines:
 
 fig, ax = plt.subplots()
 ax.scatter(ns, times)
-ax.set_title("Tiempo en función de N con M = 15")
-ax.set_xlabel('N')
+ax.set_title("Tiempo en función de M con 5000 partículas")
+ax.set_xlabel('M')
 ax.set_ylabel('Tiempo (nanosegundos)')
 
 # Show

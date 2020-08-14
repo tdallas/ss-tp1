@@ -34,7 +34,7 @@ public class CellIndexMethod {
             neighbours.put(p, new HashSet<>());
         }
         //Check argument l/m > rmax + rc
-        if((length / size) < (maxRadius + interactionRadius)){
+        if((length / size) < (2*maxRadius + interactionRadius)){
             throw new IllegalArgumentException("Incorrect arguments for Cell Index Method.");
         }
         fillMatrix(particles);
